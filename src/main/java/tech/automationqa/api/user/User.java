@@ -1,24 +1,38 @@
 package tech.automationqa.api.user;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
 public class User {
+    @Id
+    @GeneratedValue
     private Integer id;
     @NotNull
-    @Size(min = 2, message = "Name should have at least one character")
+    @Size(min = 1, message = "Name should have at least one character")
     private String name;
     @NotNull
-    @Size(min = 2)
+    @Size(min = 1)
     private String surname;
     @NotNull
-    @Size(min = 2)
+    @Size(min = 1)
     private String username;
     @NotNull
     private String dateOfBirth;
-    @NotNull
-    @Size(min = 2)
+
+    @Column(name = "mailAddress", nullable = false)
+    @Email
+    @NotBlank
     private String email;
+
+    protected User() {
+    }
 
     public Integer getId() {
         return id;
