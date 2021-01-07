@@ -14,19 +14,16 @@ public class User {
     @Id
     @GeneratedValue
     private Integer id;
-    @NotNull
-    @Size(min = 1, message = "Name should have at least one character")
+    @NotBlank
     private String name;
-    @NotNull
-    @Size(min = 1)
+    @NotBlank
     private String surname;
-    @NotNull
+    @NotBlank
     @Size(min = 1)
     private String username;
-    @NotNull
+    @NotBlank
     private String dateOfBirth;
-
-    @Column(name = "mailAddress", nullable = false)
+    @Column(name = "mail_address", nullable = false)
     @Email
     @NotBlank
     private String email;
