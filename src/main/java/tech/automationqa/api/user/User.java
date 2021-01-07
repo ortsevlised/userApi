@@ -1,12 +1,13 @@
 package tech.automationqa.api.user;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -19,9 +20,10 @@ public class User {
     @NotBlank
     private String surname;
     @NotBlank
-    @Size(min = 1)
+    @Size(min = 1,max = 10)
     private String username;
     @NotBlank
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private String dateOfBirth;
     @Column(name = "mail_address", nullable = false)
     @Email
