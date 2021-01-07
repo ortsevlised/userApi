@@ -20,7 +20,7 @@ public class User {
     @NotBlank
     private String surname;
     @NotBlank
-    @Size(min = 1,max = 10)
+    @Size(min = 1,max = 30)
     private String username;
     @NotBlank
     @DateTimeFormat(pattern = "dd-MM-yyyy")
