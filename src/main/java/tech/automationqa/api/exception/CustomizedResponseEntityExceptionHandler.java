@@ -11,7 +11,10 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import tech.automationqa.api.user.UserNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 @RestController
@@ -19,15 +22,17 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-                request.getDescription(false));
+        List<String> error = new ArrayList<>();
+        error.add(request.getDescription(false));
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), error);
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-                request.getDescription(false));
+        List<String> error = new ArrayList<>();
+        error.add(request.getDescription(false));
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), error);
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
@@ -35,7 +40,9 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "Validation Failed",
                 ex.getBindingResult().getFieldErrors().stream().map(
-                        fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage()).collect(java.util.stream.Collectors.joining(", ")));
+                        fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage()).collect(Collectors.toList()));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+
 }

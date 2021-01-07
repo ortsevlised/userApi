@@ -1,13 +1,14 @@
 package tech.automationqa.api.exception;
 
 import java.util.Date;
+import java.util.List;
 
 public class ExceptionResponse {
     private final Date timestamp;
     private final String message;
-    private final String details;
+    private final List<String> details;
 
-    public ExceptionResponse(Date timestamp, String message, String details) {
+    public ExceptionResponse(Date timestamp, String message, List<String> details) {
         super();
         this.timestamp = timestamp;
         this.message = message;
@@ -22,7 +23,7 @@ public class ExceptionResponse {
         return message;
     }
 
-    public String getDetails() {
+    public List<String> getDetails() {
         return details;
     }
 
